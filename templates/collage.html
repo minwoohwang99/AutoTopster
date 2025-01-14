@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topster Collage</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: row;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(to bottom, #1a1a1a, #333); /* Dark gradient background */
+            color: white; /* White text for readability */
+        }
+        .collage-container {
+            flex: 1;
+            text-align: center;
+        }
+        .list-container {
+            flex: 1;
+            padding: 20px;
+        }
+        img {
+            max-width: 80%;
+            height: auto;
+            border: 1px solid white; /* Thin white border around the collage */
+            border-radius: 5px; /* Optional: rounded corners */
+        }
+        ul {
+            columns: 2; /* Divide the list into 2 columns */
+            -webkit-columns: 2; /* Safari support */
+            -moz-columns: 2; /* Firefox support */
+            list-style-type: decimal;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        .back-button {
+            margin-top: 20px;
+        }
+        .back-button button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .back-button button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="collage-container">
+        <h1>Your Topster Collage</h1>
+        <img src="/collages/{{ collage_filename }}" alt="Topster Collage">
+        <div class="back-button">
+            <a href="/">
+                <button>Go Back</button>
+            </a>
+        </div>
+    </div>
+    <div class="list-container">
+        <h2>Your Top {{ display_data|length }} {{ "Songs" if content_type == "songs" else "Artists" }}</h2>
+        <ul>
+            {% for item in display_data %}
+                <li>
+                    <strong>{{ item.name }}</strong>
+                    <br>
+                    {% if content_type == "songs" %}
+                        by {{ item.artist }}
+                    {% else %}
+                        Genres: {{ item.genres }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
